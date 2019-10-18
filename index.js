@@ -132,8 +132,8 @@ function initConsumer(cb) {
             else
                 group.brokersFound++
             
-            if (group.brokersFound > 0) {
-                console.log(`[Kafka] Connected to ${group.brokersFound} brokers ...`) 
+            if (group.brokersFound == 1) {
+                console.log(`[Kafka] Established broker connection ...`) 
             } else {
                 console.log(`[Kafka] Waiting for broker assignments ...`) 
             }
