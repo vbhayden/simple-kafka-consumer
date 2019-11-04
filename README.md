@@ -13,7 +13,7 @@ npm install simple-kafka-consumer --save
 Setup for a consumer is a bit more involved than a producer, but overall not bad.  This adapter supports plaintext SASL as an authorization mechanism, so you'll need to provide those credentials if that's how your cluster is configured.
 
 ```
-const kafkaConsumer = require("./index");
+const kafkaConsumer = require("simple-kafka-consumer");
 
 // Set everything up
 kafkaConsumer.configure({
