@@ -126,17 +126,10 @@ function initConsumer(cb) {
         // to get actual broker assignments.
         else if (group.clientReady) {
             
-            // Property to track how many brokers we've connected to explicitly
-            if (group.brokersFound == undefined)
-                group.brokersFound = 0;
-            else
-                group.brokersFound++
-            
-            if (group.brokersFound == 1) {
+            if (!group.brokersFound) {
+                group.brokersFound = true;
                 console.log(`[Kafka] Established broker connection ...`) 
-            } else {
-                console.log(`[Kafka] Waiting for broker assignments ...`) 
-            }
+            } 
         }
     })
 
@@ -167,14 +160,17 @@ function initConsumer(cb) {
     //
     group.on('message', function (message) {
 
+        if (topicHistory[message.topic] == undefined)
+            topicHistory[message.topic] = {}
+
         // Check if we already received this
-        let lastOffset = topicHistory[message.topic];
+        let lastOffset = topicHistory[message.topic][message.partition];
         if (lastOffset != undefined && lastOffset >= message.offset) {
             return;
         }
 
         // If this is a new offset, broadcast it
-        topicHistory[message.topic] = message.offset;
+        topicHistory[message.topic][message.partition] = message.offset;
         
         cb(message.topic, message.offset, message.value)
     });
