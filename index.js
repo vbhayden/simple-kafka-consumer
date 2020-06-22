@@ -3,6 +3,7 @@ const kafka = require("kafka-node");
 /**
  * @typedef {Object} SimpleKafkaConsumerConfig
  * @property {string} brokers A comma-delimited string of Kafka broker endpoints.
+ * @property {boolean} useSasl Whether or not to use SASL as the auth.
  * @property {string} saslUser SASL user for the cluster.
  * @property {string} saslPass SASL password for the cluster.
  * @property {string[]} topics List of topics to consume.
@@ -85,11 +86,11 @@ function initConsumer(cb) {
         kafkaHost: config.brokers,
     
         // SASL credentials and mechanic
-        sasl: {
+        sasl: (config.useSasl !== true ? undefined : {
             mechanism: "plain",
             username: config.saslUser,
             password: config.saslPass
-        },
+        }),
     }, config.topics);
 
     // These will look a bit verbose, so we'll walk through them a bit.
