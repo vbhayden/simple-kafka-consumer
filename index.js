@@ -66,6 +66,9 @@ function log(message) {
  */
 function initConsumer(cb) {
 
+    let saslProvided = (config.saslUser != undefined) && (config.saslPass != undefined);
+    let saslExcluded = (config.useSasl === false);
+
     group = new kafka.ConsumerGroup({
     
         // Group ID so that the Kafka cluster knows which messages to send based on our offset
@@ -86,7 +89,7 @@ function initConsumer(cb) {
         kafkaHost: config.brokers,
     
         // SASL credentials and mechanic
-        sasl: (config.useSasl !== true ? undefined : {
+        sasl: (!saslProvided || saslExcluded ? undefined : {
             mechanism: "plain",
             username: config.saslUser,
             password: config.saslPass
