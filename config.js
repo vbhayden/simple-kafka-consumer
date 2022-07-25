@@ -12,7 +12,7 @@ module.exports = {
         saslUser: (process.env.KAFKA_SASL_USER || "kafka-user"),
         saslPass: (process.env.KAFKA_SASL_PASS || "kafka-pass"),
         
-        topic: (process.env.KAFKA_XAPI_TOPIC || "learner-xapi"),
+        topic: (process.env.KAFKA_TOPIC || "test-1")
     },
 }
 

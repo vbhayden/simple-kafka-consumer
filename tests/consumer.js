@@ -38,11 +38,12 @@ describe("Kafka Interop", () => {
             brokers: config.kafka.brokers,
             saslUser: config.kafka.saslUser,
             saslPass: config.kafka.saslPass,
-            consumerGroup: "test-group",
+            consumerGroup: "test-group-123",
             topics: [config.kafka.topic]
         });
         
         await simpleConsumer.initConsumer(onMessage);
+        await waitFor(simpleConsumer.isReady);
     });
 
     beforeEach(() => {
@@ -55,7 +56,7 @@ describe("Kafka Interop", () => {
 
     it("Should consume a message", async() => {
 
-        let topic = "test-1";
+        let topic = config.kafka.topic;
         let message = "hello!";
 
         simpleProducer.produceMessage(topic, message);

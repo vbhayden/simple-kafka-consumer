@@ -8,7 +8,7 @@ async function main() {
         saslUser: config.kafka.saslUser,
         saslPass: config.kafka.saslPass,
         consumerGroup: "test-group",
-        topics: [config.kafka.topic]
+        topics: ["test-1"]
     });
     
     await simpleConsumer.initConsumer(function(topic, offset, message){

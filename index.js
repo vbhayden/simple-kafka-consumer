@@ -150,12 +150,7 @@ async function initConsumer(cb) {
         }
     });
     
-    console.log(`
-    \r[Kafka]: Targeting Kafka cluster with SASL credentials:
-    \r    SASL USER: ${config.saslUser},
-    \r    SASL PASS: ${config.saslPass},
-    \r    CLUSTER  : ${config.brokers}
-    `);
+    console.log(`[Kafka] Consumer initialized.`);
 }
 
 function isReady() {
