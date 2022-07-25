@@ -1,15 +1,19 @@
-const kafkaConsumer = require("./index");
+const config = require("./config");
+const simpleConsumer = require("./index");
 
-// Set everything up
-kafkaConsumer.configure({
-    brokers: "127.0.0.1:9092",
-    saslUser: "insecure",
-    saslPass: "credentials",
-    consumerGroup: "example-group",
-    topics: ["test-1", "test-2"]
-})
+async function main() {
+    
+    simpleConsumer.configure({
+        brokers: config.kafka.brokers,
+        saslUser: config.kafka.saslUser,
+        saslPass: config.kafka.saslPass,
+        consumerGroup: "test-group",
+        topics: [config.kafka.topic]
+    });
+    
+    await simpleConsumer.initConsumer(function(topic, offset, message){
+        console.log(`[Kafka Consumer Example]: ${topic}@${offset}: ${message}`);
+    });
+}
 
-// Need to call this to trigger the client's startup process.
-kafkaConsumer.initConsumer(function(topic, offset, message){
-    console.log(`[Kafka Consumer Example]: ${topic}@${offset}: ${message}`)
-});
+main();
